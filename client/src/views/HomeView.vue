@@ -94,7 +94,7 @@ const showLocation = async () => {
 
 <template>
   <div class="container mx-auto px-4">
-    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Jukebox AI</h1>
+    <!-- <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Jukebox AI</h1> -->
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Left Column - Controls -->

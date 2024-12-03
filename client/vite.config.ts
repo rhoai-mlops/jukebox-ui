@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true,
     },
     define: {
-      'import.meta.env.INPUT_NODE': JSON.stringify(env.INPUT_NODE || 'dense_input')
+      'import.meta.env.INPUT_NODE': JSON.stringify(env.INPUT_NODE || 'input')
     }
   }
 })

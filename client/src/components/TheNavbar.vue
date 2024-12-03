@@ -1,3 +1,4 @@
+// client/src/components/TheNavbar.vue
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -22,13 +23,14 @@ const navItems = [
 </script>
 
 <template>
-  <nav class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+  <nav class="bg-white dark:bg-gray-900 border-b border-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <!-- Logo and brand -->
         <div class="flex-shrink-0 flex items-center">
-          <RouterLink to="/" class="text-gray-900 dark:text-white text-xl font-bold">
-            Jukebox AI
+          <RouterLink to="/" class="flex items-center">
+            <img src="/jukebox-logo.png" alt="Jukebox AI Logo" class="h-10 w-10 mr-2" />
+            <span class="text-xl font-bold text-gray-900 dark:text-white">Jukebox AI</span>
           </RouterLink>
         </div>
 
@@ -61,7 +63,6 @@ const navItems = [
             :aria-expanded="isMenuOpen"
           >
             <span class="sr-only">Open main menu</span>
-            <!-- Menu icons remain the same -->
             <svg
               v-if="!isMenuOpen"
               class="h-6 w-6"

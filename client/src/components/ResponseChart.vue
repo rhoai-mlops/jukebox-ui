@@ -1,7 +1,6 @@
 // client/src/components/ResponseChart.vue
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import VueApexCharts from 'vue3-apexcharts'
 
 interface Props {
   data: number[]
@@ -13,9 +12,10 @@ const chartOptions = computed(() => {
   const labels = props.data.map((_, index) => `${index}`)
   const values = [...props.data]
 
-  // Sort data while keeping original indices as labels
+  // Sort and get top 10
   const combined = labels.map((label, i) => ({ label, value: values[i] }))
   combined.sort((a, b) => b.value - a.value)
+  const top10 = combined.slice(0, 10)
 
   return {
     chart: {
@@ -37,12 +37,12 @@ const chartOptions = computed(() => {
         }
       }
     },
-    colors: ['#3B82F6'], // blue-500
+    colors: ['#3B82F6'],
     dataLabels: {
       enabled: false
     },
     xaxis: {
-      categories: combined.map(item => item.label),
+      categories: top10.map(item => item.label),
       labels: {
         style: {
           colors: document.documentElement.classList.contains('dark') ? '#fff' : '#000'
@@ -54,7 +54,7 @@ const chartOptions = computed(() => {
     yaxis: {
       min: 0,
       max: 1,
-      tickAmount: 10, // This will give us 10 evenly spaced ticks
+      tickAmount: 10,
       labels: {
         style: {
           colors: document.documentElement.classList.contains('dark') ? '#fff' : '#000'
@@ -74,7 +74,11 @@ const chartOptions = computed(() => {
 })
 
 const series = computed(() => [{
-  data: [...props.data].sort((a, b) => b - a)
+  data: [...props.data]
+    .map((value, index) => ({ value, index }))
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 10)
+    .map(item => item.value)
 }])
 </script>
 

@@ -1,3 +1,6 @@
+# sensible defaults please 🙏 - would love to be able to just use the svc 
+# address so this doesn't need configuring when running in same ns
 model_endpoint: <MODEL_ENDPOINT>
 input_node: input
 model_name: jukebox
+image: quay.io/rhoai-mlops/jukebox-ui:1.0
