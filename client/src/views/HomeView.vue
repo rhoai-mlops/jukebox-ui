@@ -5,6 +5,7 @@ import axios from 'axios'
 import AudioFeatureSlider from '@/components/AudioFeatureSlider.vue'
 import ResponseChart from '@/components/ResponseChart.vue'
 import { featureConfigs } from '@/utils/normalization'
+import { songPresets, type SongPreset } from '@/utils/songPresets'
 
 const audioFeatures = ref({
   is_explicit: 0,
@@ -40,6 +41,13 @@ const orderedFeatures = [
 
 const updateFeature = (feature: keyof typeof audioFeatures.value, value: number) => {
   audioFeatures.value[feature] = value
+}
+
+const loadPreset = (preset: SongPreset) => {
+  // Update all features from the preset
+  orderedFeatures.forEach(feature => {
+    audioFeatures.value[feature] = preset[feature]
+  })
 }
 
 const inferenceResponse = ref<any>(null)
@@ -109,6 +117,21 @@ const showLocation = async () => {
           </button>
         </div>
 
+        <!-- Preset Buttons -->
+        <div class="mb-6 space-y-2">
+          <div class="font-medium text-gray-700 dark:text-gray-300 mb-2">Presets:</div>
+          <div class="flex flex-wrap gap-2">
+            <button
+              v-for="preset in songPresets"
+              :key="preset.name"
+              @click="loadPreset(preset)"
+              class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800"
+            >
+              {{ preset.name }} - {{ preset.artist }}
+            </button>
+          </div>
+        </div>
+                
         <!-- Error Message -->
         <div v-if="error" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
           {{ error }}
