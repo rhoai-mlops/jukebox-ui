@@ -56,24 +56,21 @@ const isLoading = ref(false)
 const error = ref<string | null>(null)
 
 const showLocation = async () => {
-  // Normalize the data using the feature configs
-  const normalizedData = orderedFeatures.map(feature => {
-    const value = audioFeatures.value[feature]
-    const config = featureConfigs[feature]
-    return Number(config.normalize(value).toFixed(4))
+  const createFeatureInput = (name: string, value: number) => ({
+    name,
+    shape: [1, 1],
+    datatype: "FP32",
+    data: [value]
   })
 
-  console.log('Normalized Data:', normalizedData)
+  const featureInputs = orderedFeatures.map(feature => {
+    const value = audioFeatures.value[feature]
+    const config = featureConfigs[feature]
+    return createFeatureInput(feature, Number(config.normalize(value).toFixed(4)))
+  })
 
   const requestBody = {
-    inputs: [
-      {
-        name: "input",
-        shape: [1, 13],
-        datatype: "FP32",
-        data: [normalizedData]
-      }
-    ]
+    inputs: featureInputs
   }
 
   try {
