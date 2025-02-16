@@ -28,7 +28,7 @@ const searchTrack = async (trackId: string) => {
       ]
     }
 
-    const response = await axios.post('/api/v2/models/jukeboxfeast/infer', requestBody)
+    const response = await axios.post('/api/v2/models/jukebox/infer', requestBody)
     
     if (response.data?.outputs) {
       probabilities.value = response.data.outputs[0].data
