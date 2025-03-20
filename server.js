@@ -39,7 +39,8 @@ const apiProxy = createProxyMiddleware({
     },
     logLevel: 'debug',
     router: {
-        'refdata/song': 'http://0.0.0.0:3000'
+        'refdata/song': 'http://0.0.0.0:3000',
+        'refdata/world.geojson': 'http://0.0.0.0:3000'
     },
     onProxyReq: (proxyReq, req, res) => {
         // Log the request info
@@ -68,6 +69,9 @@ app.get('/refdata/songs', (req, res) => {
     res.send(songs);
 });
 
+app.get('/refdata/world.geojson', (req, res) => {
+    res.sendFile(path.join(__dirname, 'low-res.geo.json'));
+  });
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));

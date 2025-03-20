@@ -6,6 +6,7 @@ import AudioFeatureSlider from '@/components/AudioFeatureSlider.vue'
 import ResponseChart from '@/components/ResponseChart.vue'
 import { featureConfigs } from '@/utils/normalization'
 import { songPresets, type SongPreset } from '@/utils/songPresets'
+import WorldMapView from '@/components/WorldMapView.vue'
 
 const audioFeatures = ref({
   is_explicit: 0,
@@ -149,6 +150,15 @@ const showLocation = async () => {
           <h2 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Response Distribution</h2>
           <ResponseChart 
             :data="probabilities"
+            :country-codes="countryCodes"
+          />
+        </div>
+        
+        <!-- World Map (Below Chart) -->
+        <div v-if="probabilities.length && countryCodes.length" class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <h2 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Global Popularity</h2>
+          <WorldMapView
+            :probabilities="probabilities"
             :country-codes="countryCodes"
           />
         </div>

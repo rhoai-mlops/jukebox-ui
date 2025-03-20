@@ -35,7 +35,7 @@ const searchTrack = async (trackId: string) => {
       countryCodes.value = response.data.outputs[1].data
     }
   } catch (err) {
-    error.value = err instanceof Error ? err.message : 'An error occurred while searching'
+    error.value = err instanceof Error ? err.message : 'An error occurred while searching 💩'
     console.error('Search Error:', err)
   } finally {
     isLoading.value = false

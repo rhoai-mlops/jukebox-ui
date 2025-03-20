@@ -19,6 +19,7 @@ RUN npm ci --only=production
 
 # Copy server file
 COPY server.js .
+COPY low-res.geo.json .
 COPY feature-stores ./feature-stores
 
 # Copy built frontend from build stage
