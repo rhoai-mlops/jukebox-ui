@@ -1,5 +1,8 @@
+// client/src/router/index.ts
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import SearchView from '../views/SearchView.vue'
+import { featureFlags } from '@/utils/featureFlags'
 
 const router = createRouter({
   history: createWebHistory('/'),
@@ -12,7 +15,7 @@ const router = createRouter({
     {
       path: '/search',
       name: 'search',
-      component: () => import('../views/SearchView.vue')
+      component: SearchView
     },
     {
       path: '/playlists',
@@ -26,5 +29,14 @@ const router = createRouter({
     }
   ]
 })
+
+// Redirect to search page if feature flag is enabled
+router.beforeEach((to, from, next) => {
+  if (to.name === 'home' && featureFlags.searchAsDefault) {
+    next({ name: 'search' });
+  } else {
+    next();
+  }
+});
 
 export default router

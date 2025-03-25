@@ -7,6 +7,9 @@ RUN npm ci
 # build client side
 COPY client/ ./client/
 COPY *.config.js ./
+
+ENV VITE_FEATURE_SEARCH_AS_DEFAULT=false
+
 RUN npm run build
 
 # Production stage
