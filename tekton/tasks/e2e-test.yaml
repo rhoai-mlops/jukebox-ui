@@ -1,4 +1,4 @@
-apiVersion: tekton.dev/v1beta1
+apiVersion: tekton.dev/v1
 kind: Task
 metadata:
   name: jukebox-e2e-test
@@ -6,22 +6,30 @@ spec:
   params:
     - name: git-url
       type: string
+      default: https://github.com/rhoai-mlops/jukebox-ui.git
     - name: git-revision
       type: string
       default: main
+    - name: API_URL
+      type: string
   steps:
-    - name: git-clone
-      image: alpine/git:v2.26.2
+    - name: get-code-and-test
+      image: cypress/browsers:latest
+      env: 
+        - name: API_URL
+          value: $(params.API_URL)
+        - name: NO_COLOR
+          value: "1"
       script: |
-        git clone $(params.git-url) .
+        echo "👨‍💻 getting code 👨‍💻"
+        git clone $(params.git-url)
+        cd jukebox-ui
         git checkout $(params.git-revision)
-      
-    - name: install
-      image: node:18
-      script: |
+        ls -la 
+        echo "🐌 installing deps 🐌"
         npm ci
-        
-    - name: test
-      image: cypress/included:12.17.1
-      script: |
+        echo "🧑‍🔬 runnig tests 🧪"
         npm run test:e2e
+  volumes:
+    - name: example-volume
+      emptyDir: {}
