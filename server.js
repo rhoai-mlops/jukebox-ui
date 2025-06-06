@@ -33,6 +33,7 @@ app.use((req, res, next) => {
 
 const apiProxy = createProxyMiddleware({
     target: API_URL,
+    secure: false,
     changeOrigin: true,
     pathRewrite: {
         '^/api': '',
